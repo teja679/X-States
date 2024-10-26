@@ -37,7 +37,7 @@ function App() {
       setCities([]);
       fetchData(`${API_ENDPOINT}/country=${location.country}/state=${location.state}/cities`, setCities, () => setDisplayMessage(false));
     }
-  }, [location.state]);
+  }, [location.country, location.state]);
 
   const handleChange = (e, type) => {
     const value = e.target.value;
