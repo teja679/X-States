@@ -1,14 +1,20 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { isDisabled } from '@testing-library/user-event/dist/utils';
 
 function App() {
+  const [isStateDisabled, setIsStateDisabled] = useState(true);
+  const [isCityDisabled, setIsCityDisabled] = useState(true);
+
   const [country, setCountry] = useState('')
   const [state, setState] = useState('')
   const [city, setCity] = useState('')
-  const [countries, setCountries] = useState([])
+
   const [states, setStates] = useState([])
+  const [countries, setCountries] = useState([])
   const [cities, setCities] = useState([])
+
   const [displayMessage, setDisplayMessage] = useState('')
   const API_ENDPOINT = "https://crio-location-selector.onrender.com";
 
@@ -26,6 +32,7 @@ function App() {
         setDisplayMessage('')
         const response = await axios.get(`${API_ENDPOINT}/country=${countryName}/states`);
         setStates(response.data);
+        setIsStateDisabled(false);
       }
     } catch (err) {
       console.error('Failed to fetch States');
@@ -37,6 +44,7 @@ function App() {
         setDisplayMessage('')
         const response = await axios.get(`${API_ENDPOINT}/country=${countryName}/state=${stateName}/cities`);
         setCities(response.data);
+        setIsCityDisabled(false)
       }
     } catch (err) {
       console.error('Failed to fetch Cities');
@@ -59,7 +67,6 @@ function App() {
     fetchCountries();
   }, []);
 
-
   return (
     <div className="App">
       <h1>Select Location</h1>
@@ -71,13 +78,13 @@ function App() {
           ))}
         </select>
 
-        <select id='select-state' onChange={handleStateChange}>
+        <select id='select-state' onChange={handleStateChange} disabled={isStateDisabled}>
           <option value=''>Select State</option>
           {states.map(item => (
             <option value={item} key={item}>{item}</option>
           ))}
         </select>
-        <select id='select-city' onChange={handleCityChange}>
+        <select id='select-city' onChange={handleCityChange} disabled={isCityDisabled}>
           <option value=''>Select City</option>
           {cities.map(item => (
             <option value={item} key={item}>{item}</option>
