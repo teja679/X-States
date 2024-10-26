@@ -58,17 +58,17 @@ function App() {
       <h1>Select Location</h1>
       <section className='main-div'>
         <select onChange={(e) => handleChange(e, 'country')} value={location.country}>
-          <option value=''>Select Country</option>
+          <option value='' disabled>Select Country</option>
           {countries.map(item => <option value={item} key={item}>{item}</option>)}
         </select>
 
         <select onChange={(e) => handleChange(e, 'state')} value={location.state} disabled={!location.country}>
-          <option value=''>Select State</option>
+          <option value='' disabled>Select State</option>
           {states.map(item => <option value={item} key={item}>{item}</option>)}
         </select>
 
         <select onChange={(e) => handleChange(e, 'city')} value={location.city} disabled={!location.state}>
-          <option value=''>Select City</option>
+          <option value='' disabled>Select City</option>
           {cities.map(item => <option value={item} key={item}>{item}</option>)}
         </select>
       </section>
